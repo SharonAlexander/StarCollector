@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/content_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/appBar"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimaryDark"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="cursive"
+                android:text="Earn Stars"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-1740451756664908/3243189364">
+    </com.google.android.gms.ads.AdView>
+
+
+    <TextView
+        android:id="@+id/currentstars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:text="Retrieving stars ..."
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-thin"
+        android:textStyle="normal" />
+
+    <Button
+        android:id="@+id/rewardedad1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:text="Collect 2 stars"
+        android:background="@drawable/main_buttons"
+        android:fontFamily="sans-serif-thin"
+        android:shadowColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorAccent"
+        android:textAllCaps="false"
+        android:textStyle="normal" />
+
+    <Button
+        android:id="@+id/rewardedad2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:text="Collect 2 stars"
+        android:background="@drawable/main_buttons"
+        android:fontFamily="sans-serif-thin"
+        android:shadowColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorAccent"
+        android:textAllCaps="false"
+        android:textStyle="normal" />
+
+    <Button
+        android:id="@+id/rewardedad3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:text="Collect 2 stars"
+        android:background="@drawable/main_buttons"
+        android:fontFamily="sans-serif-thin"
+        android:shadowColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorAccent"
+        android:textAllCaps="false"
+        android:textStyle="normal" />
+
+    <Button
+        android:id="@+id/rewardedad4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:text="Collect 2 stars"
+        android:background="@drawable/main_buttons"
+        android:fontFamily="sans-serif-thin"
+        android:shadowColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorAccent"
+        android:textAllCaps="false"
+        android:textStyle="normal" />
+
+    <Button
+        android:id="@+id/rewardedad5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:text="Collect 2 stars"
+        android:background="@drawable/main_buttons"
+        android:fontFamily="sans-serif-thin"
+        android:shadowColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorAccent"
+        android:textAllCaps="false"
+        android:textStyle="normal" />
+
+</LinearLayout>

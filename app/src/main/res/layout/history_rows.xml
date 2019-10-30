@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/history_row"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/stars_used"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/colorAccent"
+            android:textSize="15sp"
+            android:fontFamily="sans-serif-thin"
+            android:textStyle="normal"
+            android:text="stars used" />
+
+        <TextView
+            android:id="@+id/money_converted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textSize="15sp"
+            android:fontFamily="sans-serif-thin"
+            android:textStyle="normal"
+            android:layout_gravity="center_horizontal"
+            android:text="money converted" />
+
+        <TextView
+            android:id="@+id/request_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textSize="15sp"
+            android:fontFamily="sans-serif-thin"
+            android:textStyle="normal"
+            android:layout_gravity="center_horizontal"
+            android:text="request time" />
+
+        <TextView
+            android:id="@+id/request_status"
+            android:layout_width="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textSize="15sp"
+            android:fontFamily="sans-serif-thin"
+            android:textStyle="normal"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="request status" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/colorPrimaryDark" />
+</LinearLayout>

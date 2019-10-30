@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:background="@drawable/loginscreen">
+
+        <TextView
+            android:id="@+id/app_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/phoneNumber"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="150dp"
+            android:layout_marginBottom="32dp"
+            android:fontFamily="cursive"
+            android:text="Star Collector"
+            android:textColor="@color/colorAccent"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/phoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/login_edittext"
+            android:drawableStart="@drawable/phone_icon"
+            android:ems="10"
+            android:hint="Phone number"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/verification_code"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/login_edittext"
+            android:drawableStart="@drawable/ic_sms"
+            android:ems="10"
+            android:hint="OTP"
+            android:inputType="phone"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/loginbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/phoneNumber"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:shadowColor="@color/colorAccent"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/login_button"
+            android:text="Send OTP" />
+
+        <TextView
+            android:id="@+id/resendsms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/verification_code"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/verification_code"
+            android:fontFamily="cursive"
+            android:text="Resend OTP"
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/verification_code"
+            android:layout_toStartOf="@id/verification_code"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/verifybutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:shadowColor="@color/colorAccent"
+            android:layout_below="@id/verification_code"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/login_button"
+            android:text="Verify"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+</LinearLayout>

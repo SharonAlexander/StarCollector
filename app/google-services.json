@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "629932108199",
+    "firebase_url": "https://star-collector-60612.firebaseio.com",
+    "project_id": "star-collector-60612",
+    "storage_bucket": "star-collector-60612.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:629932108199:android:60b21ed6b598e58c12ae82",
+        "android_client_info": {
+          "package_name": "com.sharon.starcollector"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "629932108199-ichltad21g5dpssosvk93sj5kpmjkbr6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sharon.starcollector",
+            "certificate_hash": "858975932b94a6446beaac3b362a18f9d5f0f94e"
+          }
+        },
+        {
+          "client_id": "629932108199-fedk0a0n2r0nffgoqru4g6daidu1mq65.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTF1bIK0nI8OB06Pg1Hc119fkIp0kVOVI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "629932108199-fedk0a0n2r0nffgoqru4g6daidu1mq65.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
