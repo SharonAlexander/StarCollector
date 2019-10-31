@@ -45,6 +45,9 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
+        <meta-data
+            android:name="applovin.sdk.key"
+            android:value="pgl4cZUURXycqPqJBp-MIlbpN9XnsIbC0S5V9gRIvAg0nwL7i-Z0CiXAe59eUKIzKhiM4aSTZd34ihd9w3hnOt" />
     </application>
 
 </manifest>

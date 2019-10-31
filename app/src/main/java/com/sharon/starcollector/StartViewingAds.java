@@ -14,12 +14,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.applovin.adview.AppLovinIncentivizedInterstitial;
+import com.applovin.sdk.AppLovinAd;
+import com.applovin.sdk.AppLovinAdDisplayListener;
+import com.applovin.sdk.AppLovinAdLoadListener;
+import com.applovin.sdk.AppLovinAdRewardListener;
+import com.applovin.sdk.AppLovinSdk;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.rewarded.RewardItem;
-import com.google.android.gms.ads.rewarded.RewardedAd;
-import com.google.android.gms.ads.rewarded.RewardedAdCallback;
-import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
@@ -28,16 +30,20 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Map;
+
 public class StartViewingAds extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "StartViewingAds";
-    Button reward1Button, reward2Button,reward3Button,reward4Button,reward5Button;
+    Button reward1Button, reward2Button, reward3Button, reward4Button, reward5Button;
     TextView currentStars;
     FirebaseFirestore db;
     PrefManager prefManager;
-    RewardedAdLoadCallback adLoadCallback1, adLoadCallback2,adLoadCallback3,adLoadCallback4,adLoadCallback5;
+    AppLovinIncentivizedInterstitial rewardAd1, rewardAd2, rewardAd3, rewardAd4, rewardAd5;
+    AppLovinAdLoadListener listener1, listener2, listener3, listener4, listener5;
+    AppLovinAdRewardListener rewardListener;
+    AppLovinAdDisplayListener adDisplayListener1, adDisplayListener2, adDisplayListener3, adDisplayListener4, adDisplayListener5;
     private boolean bonusAdWatched = false;
-    private RewardedAd rewardedAd1, rewardedAd2,rewardedAd3,rewardedAd4,rewardedAd5;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,13 +59,251 @@ public class StartViewingAds extends AppCompatActivity implements View.OnClickLi
         currentStars();
 
         currentStars = findViewById(R.id.currentstars);
-        initialiseAllAdButtons();
+        currentStars = findViewById(R.id.currentstars);
+        initialiseAllButtons();
 
         AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addTestDevice("28C860176FFCDA81CE79CBEE1E3F6D38").build();
         mAdView.loadAd(adRequest);
 
-        initialiseAllAds();
+        AppLovinSdk.initializeSdk(this);
+        applovinInitialise();
+    }
+
+    private void applovinInitialise() {
+
+        rewardListener = new AppLovinAdRewardListener() {
+            @Override
+            public void userRewardVerified(AppLovinAd ad, Map map) {
+                Log.d(TAG, "userRewardVerified: " + map.get("stars"));
+//                startAlertToCollectRewards(response.get);
+            }
+
+            @Override
+            public void userOverQuota(AppLovinAd ad, Map<String, String> response) {
+                Log.d(TAG, "userOverQuota: ");
+                Toast.makeText(StartViewingAds.this, "Quota Finished", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void userRewardRejected(AppLovinAd ad, Map<String, String> response) {
+
+            }
+
+            @Override
+            public void validationRequestFailed(AppLovinAd ad, int errorCode) {
+
+            }
+
+            @Override
+            public void userDeclinedToViewAd(AppLovinAd ad) {
+
+            }
+        };
+        applovinDisplayListeneres();
+        applovinAdsInitialise();
+    }
+
+    private void applovinDisplayListeneres() {
+        adDisplayListener1 = new AppLovinAdDisplayListener() {
+            @Override
+            public void adDisplayed(AppLovinAd ad) {
+                Log.d(TAG, "adDisplayed: ");
+            }
+
+            @Override
+            public void adHidden(AppLovinAd ad) {
+                Log.d(TAG, "adHidden: ");
+                reward1Button.setEnabled(false);
+                startAlertToCollectRewards(2);
+            }
+        };
+
+        adDisplayListener2 = new AppLovinAdDisplayListener() {
+            @Override
+            public void adDisplayed(AppLovinAd ad) {
+                Log.d(TAG, "adDisplayed: ");
+            }
+
+            @Override
+            public void adHidden(AppLovinAd ad) {
+                Log.d(TAG, "adHidden: ");
+                reward2Button.setEnabled(false);
+                startAlertToCollectRewards(2);
+            }
+        };
+
+        adDisplayListener3 = new AppLovinAdDisplayListener() {
+            @Override
+            public void adDisplayed(AppLovinAd ad) {
+                Log.d(TAG, "adDisplayed: ");
+            }
+
+            @Override
+            public void adHidden(AppLovinAd ad) {
+                Log.d(TAG, "adHidden: ");
+                reward3Button.setEnabled(false);
+                startAlertToCollectRewards(2);
+            }
+        };
+
+        adDisplayListener4 = new AppLovinAdDisplayListener() {
+            @Override
+            public void adDisplayed(AppLovinAd ad) {
+                Log.d(TAG, "adDisplayed: ");
+            }
+
+            @Override
+            public void adHidden(AppLovinAd ad) {
+                Log.d(TAG, "adHidden: ");
+                reward4Button.setEnabled(false);
+                startAlertToCollectRewards(2);
+            }
+        };
+
+        adDisplayListener5 = new AppLovinAdDisplayListener() {
+            @Override
+            public void adDisplayed(AppLovinAd ad) {
+                Log.d(TAG, "adDisplayed: ");
+            }
+
+            @Override
+            public void adHidden(AppLovinAd ad) {
+                Log.d(TAG, "adHidden: ");
+                reward5Button.setEnabled(false);
+                startAlertToCollectRewards(2);
+            }
+        };
+    }
+
+    private void applovinAdsInitialise() {
+        rewardAd1 = AppLovinIncentivizedInterstitial.create(this);
+        listener1 = new AppLovinAdLoadListener() {
+            @Override
+            public void adReceived(AppLovinAd ad) {
+                Log.d(TAG, "adReceived: ");
+                reward1Button.setEnabled(true);
+            }
+
+            @Override
+            public void failedToReceiveAd(int errorCode) {
+                Log.d(TAG, "failedToReceiveAd: 1");
+            }
+        };
+        rewardAd1.preload(listener1);
+
+        rewardAd2 = AppLovinIncentivizedInterstitial.create(this);
+        listener2 = new AppLovinAdLoadListener() {
+            @Override
+            public void adReceived(AppLovinAd ad) {
+                Log.d(TAG, "adReceived: ");
+                reward2Button.setEnabled(true);
+            }
+
+            @Override
+            public void failedToReceiveAd(int errorCode) {
+                Log.d(TAG, "failedToReceiveAd: 2");
+            }
+        };
+        rewardAd2.preload(listener2);
+
+        rewardAd3 = AppLovinIncentivizedInterstitial.create(this);
+        listener3 = new AppLovinAdLoadListener() {
+            @Override
+            public void adReceived(AppLovinAd ad) {
+                Log.d(TAG, "adReceived: ");
+                reward3Button.setEnabled(true);
+            }
+
+            @Override
+            public void failedToReceiveAd(int errorCode) {
+                Log.d(TAG, "failedToReceiveAd: 3");
+            }
+        };
+        rewardAd3.preload(listener3);
+
+        rewardAd4 = AppLovinIncentivizedInterstitial.create(this);
+        listener4 = new AppLovinAdLoadListener() {
+            @Override
+            public void adReceived(AppLovinAd ad) {
+                Log.d(TAG, "adReceived: ");
+                reward4Button.setEnabled(true);
+            }
+
+            @Override
+            public void failedToReceiveAd(int errorCode) {
+                Log.d(TAG, "failedToReceiveAd: 4");
+            }
+        };
+        rewardAd4.preload(listener4);
+
+        rewardAd5 = AppLovinIncentivizedInterstitial.create(this);
+        listener5 = new AppLovinAdLoadListener() {
+            @Override
+            public void adReceived(AppLovinAd ad) {
+                Log.d(TAG, "adReceived: ");
+                reward5Button.setEnabled(true);
+            }
+
+            @Override
+            public void failedToReceiveAd(int errorCode) {
+                Log.d(TAG, "failedToReceiveAd: 5");
+            }
+        };
+        rewardAd5.preload(listener5);
+
+
+    }
+
+    private void initialiseAllButtons() {
+        Log.d(TAG, "initialiseAllButtons: ");
+        reward1Button = findViewById(R.id.rewardedad1);
+        reward1Button.setOnClickListener(this);
+
+        reward2Button = findViewById(R.id.rewardedad2);
+        reward2Button.setOnClickListener(this);
+
+        reward3Button = findViewById(R.id.rewardedad3);
+        reward3Button.setOnClickListener(this);
+
+        reward4Button = findViewById(R.id.rewardedad4);
+        reward4Button.setOnClickListener(this);
+
+        reward5Button = findViewById(R.id.rewardedad5);
+        reward5Button.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.rewardedad1:
+                if (rewardAd1.isAdReadyToDisplay()) {
+                    rewardAd1.show(this, rewardListener, null, adDisplayListener1, null);
+                }
+                break;
+            case R.id.rewardedad2:
+                if (rewardAd2.isAdReadyToDisplay()) {
+                    rewardAd2.show(this, rewardListener, null, adDisplayListener2, null);
+                }
+                break;
+            case R.id.rewardedad3:
+                if (rewardAd3.isAdReadyToDisplay()) {
+                    rewardAd3.show(this, rewardListener, null, adDisplayListener3, null);
+                }
+                break;
+            case R.id.rewardedad4:
+                if (rewardAd4.isAdReadyToDisplay()) {
+                    rewardAd4.show(this, rewardListener, null, adDisplayListener4, null);
+                }
+                break;
+            case R.id.rewardedad5:
+                if (rewardAd5.isAdReadyToDisplay()) {
+                    rewardAd5.show(this, rewardListener, null, adDisplayListener5, null);
+                }
+                break;
+
+        }
     }
 
     @Override
@@ -74,266 +318,14 @@ public class StartViewingAds extends AppCompatActivity implements View.OnClickLi
         prefManager.setstoredTimeStamp(Timestamp.now().getSeconds());
     }
 
-    private void initialiseAllAds() {
-        //reward 1
-        rewardedAd1 = new RewardedAd(this,
-                "ca-app-pub-1740451756664908/6481039877");
-
-        adLoadCallback1 = new RewardedAdLoadCallback() {
-            @Override
-            public void onRewardedAdLoaded() {
-                // Ad successfully loaded.
-                reward1Button.setEnabled(true);
-            }
-
-            @Override
-            public void onRewardedAdFailedToLoad(int errorCode) {
-                // Ad failed to load.
-                Log.d(TAG, "onRewardedAdFailedToLoad: 1");
-            }
-        };
-        rewardedAd1.loadAd(new AdRequest.Builder().addTestDevice("28C860176FFCDA81CE79CBEE1E3F6D38").build(), adLoadCallback1);
-
-        //reward 2
-        rewardedAd2 = new RewardedAd(this,
-                "ca-app-pub-1740451756664908/3870709473");
-
-        adLoadCallback2 = new RewardedAdLoadCallback() {
-            @Override
-            public void onRewardedAdLoaded() {
-                // Ad successfully loaded.
-                reward2Button.setEnabled(true);
-            }
-
-            @Override
-            public void onRewardedAdFailedToLoad(int errorCode) {
-                // Ad failed to load.
-                Log.d(TAG, "onRewardedAdFailedToLoad: 2");
-            }
-        };
-        rewardedAd2.loadAd(new AdRequest.Builder().addTestDevice("28C860176FFCDA81CE79CBEE1E3F6D38").build(), adLoadCallback2);
-
-        //reward 3
-        rewardedAd3 = new RewardedAd(this,
-                "ca-app-pub-1740451756664908/1134828944");
-
-        adLoadCallback3 = new RewardedAdLoadCallback() {
-            @Override
-            public void onRewardedAdLoaded() {
-                // Ad successfully loaded.
-                reward3Button.setEnabled(true);
-            }
-
-            @Override
-            public void onRewardedAdFailedToLoad(int errorCode) {
-                // Ad failed to load.
-                Log.d(TAG, "onRewardedAdFailedToLoad: 3");
-            }
-        };
-        rewardedAd3.loadAd(new AdRequest.Builder().addTestDevice("28C860176FFCDA81CE79CBEE1E3F6D38").build(), adLoadCallback3);
-
-        //reward 4
-        rewardedAd4 = new RewardedAd(this,
-                "ca-app-pub-1740451756664908/3681440541");
-
-        adLoadCallback4 = new RewardedAdLoadCallback() {
-            @Override
-            public void onRewardedAdLoaded() {
-                // Ad successfully loaded.
-                reward4Button.setEnabled(true);
-            }
-
-            @Override
-            public void onRewardedAdFailedToLoad(int errorCode) {
-                // Ad failed to load.
-                Log.d(TAG, "onRewardedAdFailedToLoad: 4");
-            }
-        };
-        rewardedAd4.loadAd(new AdRequest.Builder().addTestDevice("28C860176FFCDA81CE79CBEE1E3F6D38").build(), adLoadCallback4);
-
-        //reward 5
-        rewardedAd5 = new RewardedAd(this,
-                "ca-app-pub-1740451756664908/9261070284");
-
-        adLoadCallback5 = new RewardedAdLoadCallback() {
-            @Override
-            public void onRewardedAdLoaded() {
-                // Ad successfully loaded.
-                reward5Button.setEnabled(true);
-            }
-
-            @Override
-            public void onRewardedAdFailedToLoad(int errorCode) {
-                // Ad failed to load.
-                Log.d(TAG, "onRewardedAdFailedToLoad: 5");
-            }
-        };
-        rewardedAd5.loadAd(new AdRequest.Builder().addTestDevice("28C860176FFCDA81CE79CBEE1E3F6D38").build(), adLoadCallback5);
-
-
-    }
-
-    private void initialiseAllAdButtons() {
-        //reward 1
-        reward1Button = findViewById(R.id.rewardedad1);
-        reward1Button.setOnClickListener(this);
-        reward1Button.setEnabled(false);
-
-        //reward 2
-        reward2Button = findViewById(R.id.rewardedad2);
-        reward2Button.setOnClickListener(this);
-        reward2Button.setEnabled(false);
-
-        //reward 2
-        reward3Button = findViewById(R.id.rewardedad3);
-        reward3Button.setOnClickListener(this);
-        reward3Button.setEnabled(false);
-
-        //reward 2
-        reward4Button = findViewById(R.id.rewardedad4);
-        reward4Button.setOnClickListener(this);
-        reward4Button.setEnabled(false);
-
-        //reward 2
-        reward5Button = findViewById(R.id.rewardedad5);
-        reward5Button.setOnClickListener(this);
-        reward5Button.setEnabled(false);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.rewardedad1:
-                startReward1();
-                break;
-            case R.id.rewardedad2:
-                startReward2();
-                break;
-            case R.id.rewardedad3:
-                startReward3();
-                break;
-            case R.id.rewardedad4:
-                startReward4();
-                break;
-            case R.id.rewardedad5:
-                startReward5();
-                break;
-        }
-    }
-
-    private void startReward5() {
-        if (rewardedAd5.isLoaded()) {
-            RewardedAdCallback rewardedAdCallback = new RewardedAdCallback() {
-                @Override
-                public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
-                    bonusAdWatched = true;
-                    startAlertToCollectRewards(rewardItem.getAmount());
-                }
-
-                @Override
-                public void onRewardedAdClosed() {
-                    // Ad closed.
-                    reward5Button.setEnabled(false);
-                }
-
-            };
-            rewardedAd5.show(this, rewardedAdCallback);
-        } else {
-            Toast.makeText(this, "Ad not loaded yet", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void startReward4() {
-        if (rewardedAd4.isLoaded()) {
-            RewardedAdCallback rewardedAdCallback = new RewardedAdCallback() {
-                @Override
-                public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
-                    startAlertToCollectRewards(rewardItem.getAmount());
-                }
-
-                @Override
-                public void onRewardedAdClosed() {
-                    // Ad closed.
-                    reward4Button.setEnabled(false);
-                }
-
-            };
-            rewardedAd4.show(this, rewardedAdCallback);
-        } else {
-            Toast.makeText(this, "Ad not loaded yet", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void startReward3() {
-        if (rewardedAd3.isLoaded()) {
-            RewardedAdCallback rewardedAdCallback = new RewardedAdCallback() {
-                @Override
-                public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
-                    startAlertToCollectRewards(rewardItem.getAmount());
-                }
-
-                @Override
-                public void onRewardedAdClosed() {
-                    // Ad closed.
-                    reward3Button.setEnabled(false);
-                }
-
-            };
-            rewardedAd3.show(this, rewardedAdCallback);
-        } else {
-            Toast.makeText(this, "Ad not loaded yet", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void startReward2() {
-        if (rewardedAd2.isLoaded()) {
-            RewardedAdCallback rewardedAdCallback = new RewardedAdCallback() {
-                @Override
-                public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
-                    startAlertToCollectRewards(rewardItem.getAmount());
-                }
-
-                @Override
-                public void onRewardedAdClosed() {
-                    // Ad closed.
-                    reward2Button.setEnabled(false);
-                }
-
-            };
-            rewardedAd2.show(this, rewardedAdCallback);
-        } else {
-            Toast.makeText(this, "Ad not loaded yet", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void startReward1() {
-        if (rewardedAd1.isLoaded()) {
-            RewardedAdCallback rewardedAdCallback = new RewardedAdCallback() {
-                @Override
-                public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
-                    startAlertToCollectRewards(rewardItem.getAmount());
-                }
-
-                @Override
-                public void onRewardedAdClosed() {
-                    reward1Button.setEnabled(false);
-                }
-
-            };
-            rewardedAd1.show(this, rewardedAdCallback);
-        } else {
-            Toast.makeText(this, "Ad not loaded yet", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private void startAlertToCollectRewards(final int amount) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(StartViewingAds.this,R.style.MyAlertDialogTheme);
+        AlertDialog.Builder alert = new AlertDialog.Builder(StartViewingAds.this, R.style.MyAlertDialogTheme);
         alert.setPositiveButton("Collect", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        updateRewards(amount);
-                    }
-                })
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                updateRewards(amount);
+            }
+        })
                 .setView(R.layout.collect_rewards_alert)
                 .setCancelable(false).create().show();
     }
@@ -342,7 +334,7 @@ public class StartViewingAds extends AppCompatActivity implements View.OnClickLi
         DocumentReference userRef = db.collection("users")
                 .document(prefManager.getUserName());
         userRef.update("stars", FieldValue.increment(reward), "ads_watched", FieldValue.increment(1)
-                , "total_ads_watched", FieldValue.increment(1),"total_stars_lifetime",FieldValue.increment(reward));
+                , "total_ads_watched", FieldValue.increment(1), "total_stars_lifetime", FieldValue.increment(reward));
         if (bonusAdWatched)
             userRef.update("bonus_ads_watched", FieldValue.increment(1));
         Toast.makeText(this, "2 reward stars added", Toast.LENGTH_SHORT).show();
@@ -359,7 +351,7 @@ public class StartViewingAds extends AppCompatActivity implements View.OnClickLi
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (document != null) {
-                                currentStars.setText(Integer.parseInt(document.get("stars").toString())+ new String(new int[] { 0x2B50 }, 0, 1)+" stars collected");
+                                currentStars.setText(Integer.parseInt(document.get("stars").toString()) + new String(new int[]{0x2B50}, 0, 1) + " stars collected");
                             }
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());

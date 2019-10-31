@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 29
@@ -14,7 +15,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -29,7 +30,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.1.0'
     implementation 'com.google.firebase:firebase-firestore:21.2.1'
     implementation 'com.google.android.gms:play-services-ads:18.2.0'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    implementation 'com.google.firebase:firebase-analytics:17.2.1'
+    implementation 'com.adcolony:sdk:4.1.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
+    implementation 'com.applovin:applovin-sdk:9.9.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
