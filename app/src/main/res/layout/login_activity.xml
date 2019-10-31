@@ -28,24 +28,28 @@
 
         <EditText
             android:id="@+id/phoneNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
             android:layout_centerInParent="true"
             android:background="@drawable/login_edittext"
             android:drawableStart="@drawable/phone_icon"
             android:ems="10"
-            android:hint="Phone number"
+            android:cursorVisible="true"
+            android:hint="Enter 10 digit number"
+            android:textCursorDrawable="@drawable/edittextcursor"
             android:inputType="phone" />
 
         <EditText
             android:id="@+id/verification_code"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="50dp"
             android:layout_centerInParent="true"
             android:background="@drawable/login_edittext"
             android:drawableStart="@drawable/ic_sms"
             android:ems="10"
             android:hint="OTP"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@drawable/edittextcursor"
             android:inputType="phone"
             android:visibility="gone" />
 

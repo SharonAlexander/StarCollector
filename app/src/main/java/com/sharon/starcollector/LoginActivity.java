@@ -171,7 +171,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void login(final String phoneNumber) {
-        mAuth.getFirebaseAuthSettings().setAutoRetrievedSmsCodeForPhoneNumber("+919998887771","234567");
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 "+91"+phoneNumber,
                 60,
